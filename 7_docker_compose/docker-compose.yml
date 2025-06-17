@@ -1,0 +1,27 @@
+version: "3"
+services:
+
+  db:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: posgresAPI
+    volumes:
+    - ./.env:/opt/app/.env
+    ports:
+    - 5432:80
+    networks:
+    - my-pg-network
+    environment:
+      POSTGRES_PASSWORD: 123456789
+  rmq:
+    image: rabbitmq:latest
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+networks:
+  my-pg-network:
+    driver: bridge
